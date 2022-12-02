@@ -8,8 +8,7 @@ class TripList extends StatefulWidget {
 }
 
 class _TripListState extends State<TripList> {
-  List<Widget> _tripTiles = [];
-  final GlobalKey _listKey = GlobalKey();
+  List<Trip> _tripList = [];
 
   @override
   void initState() {
@@ -47,53 +46,55 @@ class _TripListState extends State<TripList> {
     ];
 
     _trips.forEach((Trip trip) {
-      _tripTiles.add(_buildTile(trip));
+      _tripList.add(trip);
     });
-  }
-
-  Widget _buildTile(Trip trip) {
-    return ListTile(
-      onTap: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => Details(
-              trip: trip,
-            ),
-          ),
-        );
-      },
-      contentPadding: const EdgeInsets.all(25),
-      title: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text('${trip.nights} nights',
-              style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.blue[300])),
-          Text(trip.title,
-              style: TextStyle(fontSize: 20, color: Colors.grey[600])),
-        ],
-      ),
-      leading: ClipRRect(
-        borderRadius: BorderRadius.circular(8.0),
-        child: Image.asset(
-          'assets/images/${trip.img}',
-          height: 50.0,
-        ),
-      ),
-      trailing: Text('\$${trip.price}'),
-    );
   }
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-        key: _listKey,
-        itemCount: _tripTiles.length,
-        itemBuilder: (context, index) {
-          return _tripTiles[index];
-        });
+      itemCount: _tripList.length,
+      itemBuilder: (context, index) {
+        final item = _tripList[index];
+        return ListTile(
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Details(
+                  trip: item,
+                ),
+              ),
+            );
+          },
+          contentPadding: const EdgeInsets.all(25),
+          title: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('${item.nights} nights',
+                  style: TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.blue[300])),
+              Text(
+                item.title,
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.grey[600],
+                ),
+              ),
+            ],
+          ),
+          leading: ClipRRect(
+            borderRadius: BorderRadius.circular(8.0),
+            child: Image.asset(
+              'assets/images/${item.img}',
+              height: 50.0,
+            ),
+          ),
+          trailing: Text('\$${item.price}'),
+        );
+      },
+    );
   }
 }
