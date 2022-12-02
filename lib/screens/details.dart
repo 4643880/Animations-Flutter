@@ -20,12 +20,15 @@ class Details extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               ClipRRect(
-                  child: Image.asset(
-                'assets/images/${trip.img}',
-                height: 360,
-                fit: BoxFit.cover,
-                alignment: Alignment.topCenter,
-              )),
+                  child: Hero(
+                    tag: "location-image-${trip.img}",
+                    child: Image.asset(
+                                  'assets/images/${trip.img}',
+                                  height: 360,
+                                  fit: BoxFit.cover,
+                                  alignment: Alignment.topCenter,
+                                ),
+                  )),
               const SizedBox(height: 30),
               ListTile(
                   title: Text(trip.title,
