@@ -9,20 +9,26 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late Animation _colorAnimation;
   late Animation<double> _sizeAnimation;
+  late Animation<double> _curve;
 
   bool isFav = false;
 
   @override
   void initState() {
     _controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: const Duration(seconds: 1),
       vsync: this,
+    );
+
+    _curve = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.slowMiddle,
     );
 
     _colorAnimation = ColorTween(
       begin: Colors.grey[400],
       end: Colors.red,
-    ).animate(_controller);
+    ).animate(_curve);
 
     _sizeAnimation = TweenSequence(
       [
@@ -35,7 +41,7 @@ class _HeartState extends State<Heart> with SingleTickerProviderStateMixin {
           tween: Tween<double>(begin: 50, end: 30),
         ),
       ],
-    ).animate(_controller);
+    ).animate(_curve);
 
     // _controller.forward(); // Will start animation
     // _controller.reverse(); // Will reverse

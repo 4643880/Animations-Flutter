@@ -12,11 +12,12 @@ class ScreenTitle extends StatelessWidget {
     return TweenAnimationBuilder(
       tween: Tween<double>(begin: 0, end: 1),
       duration: const Duration(seconds: 1),
+      curve: Curves.easeIn,
       builder: (context, valuebetweenZerotoOne, child) {
         return Opacity(
           opacity: valuebetweenZerotoOne,
           child: Padding(
-            padding: EdgeInsets.only(top: valuebetweenZerotoOne * 20),
+            padding: EdgeInsets.only(top: valuebetweenZerotoOne * 30),
             child: child,
           ),
         );
