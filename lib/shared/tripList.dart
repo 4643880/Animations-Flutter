@@ -49,14 +49,30 @@ class _TripListState extends State<TripList> {
       ),
     ];
 
+    Future myEmptyFuture = Future(
+      () {},
+    );
+
     _trips.forEach((Trip trip) {
-      _tripList.add(trip);
-      // index no e.g total items in list are 10 then index will be 9 means -1
-      listKey.currentState?.insertItem(
-        _tripList.length - 1,
-        duration: const Duration(seconds: 1),
-      );
+      myEmptyFuture = myEmptyFuture.then((value) => Future.delayed(
+              const Duration(milliseconds: 100),
+              () {
+                _tripList.add(trip);
+                // index no e.g total items in list are 10 then index will be 9 means -1
+                listKey.currentState?.insertItem(
+                  _tripList.length - 1,
+                  duration: const Duration(seconds: 1),
+                );
+              },
+            ));
     });
+
+    //  _tripList.add(trip);
+    //   // index no e.g total items in list are 10 then index will be 9 means -1
+    //   listKey.currentState?.insertItem(
+    //     _tripList.length - 1,
+    //     duration: const Duration(seconds: 1),
+    //   );
   }
 
   final Tween<Offset> _offset = Tween<Offset>(
